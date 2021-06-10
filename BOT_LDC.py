@@ -17,6 +17,10 @@ f = open('./joueurs.json', 'r')
 joueurs = json.load(f)
 f.close()
 
+f = open("./équipes.json", "r")
+équipes = json.load(f)
+f.close()
+
 scope = [   "https://spreadsheets.google.com/feeds",'https://www.googleapis.com/auth/spreadsheets',"https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/drive"]
 creads = ServiceAccountCredentials.from_json_keyfile_name("creads.json", scope)
 client = gspread.authorize(creads)
@@ -234,8 +238,8 @@ async def inscription(ctx):
         "cote_peak" : cote_peak,
         "role" : role,
         "picks" : picks,
-        "date_inscription" : date_inscription,
         "prix" : prix,
+        "date_inscription" : date_inscription,
     })
     f = open('./joueurs.json', 'w')
     json.dump(joueurs, f)
@@ -655,17 +659,6 @@ async def resignation(ctx, joueurUser : discord.User) :
     else :
         await author.send(f"✅ **{author.name}** a bien été désinscrit(e) ! ✅")
 
-@bot.command()
-async def test(ctx):
-    message = ctx.message
-    author = message.author
-    channel = message.channel
-    await ctx.message.delete()
-    f = open('./joueurs.json', 'r')
-    joueurs = json.load(f)
-    f.close()
-    a = discord.User
-    await message.channel.send(a)
 #- création d équipe dans la ligue
 
 #- supprimer une équipe dans la ligue
@@ -675,6 +668,7 @@ async def test(ctx):
 #- annuler_contrat
 
 #- info joueur
+
 @bot.command()
 async def info(ctx, joueurUser : discord.User) :
     message = ctx.message
@@ -689,7 +683,7 @@ async def info(ctx, joueurUser : discord.User) :
         if joueur['author.id'] == joueurUser.id :
             joueur_trouvé = True
             joueur_color = "0xff7b00"
-            joueur_logo = "cup_logo4.png"
+            joueur_logo = "../cup_logo5.png"
     if joueur_trouvé == False :   
         await author.send("⚠️ Le joueur recherché n'est pas inscrit ! ⚠️")
         return
